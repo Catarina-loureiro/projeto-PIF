@@ -103,7 +103,7 @@ void imprimir(){
 
 }
 void abrircelula(int l , int c){
-    if (coordenadaValida(l, c)==1 && jogo[l][c].estarAberta==0){
+    if (coordenadaValida(l, c)==1 && jogo[l][c].estaAberta==0){
         jogo[l][c].estaAberta= 1;
         if (jogo[l][c].vizinhos==0){
             abrircelula(l-1, c);
@@ -124,9 +124,8 @@ int ganhou(){
            }
         }
     }
-    return quantidade
+    return quantidade;
 }
-
 void jogar(){
     int linha, coluna;
     do{
@@ -137,14 +136,14 @@ void jogar(){
             if (coordenadaValida(linha, coluna)==0){
                 printf("\nCoordenada inválida!");
             }
-        }while (coordenadaValida(linha, coluna)==0 || jogo[linha][coluna].estarAberta == 1);
+        }while (coordenadaValida(linha, coluna)==0 || jogo[linha][coluna].estaAberta == 1);
         abrircelula(linha,coluna);
     }while(ganhou()!=0 && jogo[linha][coluna].eBomba==0);
 
     if(jogo[linha][coluna].eBomba==1){
-        printf("\n\t GAME OVER\n")
+        printf("\n\t GAME OVER\n");
     }else{
-        printf("\n\t CONGRATS! YOU WON!\n")
+        printf("\n\t CONGRATS! YOU WON!\n");
     }
 }
 
@@ -160,7 +159,7 @@ int main(){
         printf("\n\t\t\tCAMPO MINADO\n");
         jogar();
 
-        printf("Digite 1 para jogar novamente: ");
+        printf("Digite qualquer tecla para encerrar o jogo ou 1 para jogar novamente: ");
         scanf("%d", &op);
 
     }while(op==1);
