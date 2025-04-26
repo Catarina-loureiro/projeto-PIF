@@ -102,14 +102,68 @@ void imprimir(){
     }
 
 }
+void abrircelula(int l , int c){
+    if (coordenadaValida(l, c)==1 && jogo[l][c].estarAberta==0){
+        jogo[l][c].estaAberta= 1;
+        if (jogo[l][c].vizinhos==0){
+            abrircelula(l-1, c);
+            abrircelula(l+1, c);
+            abrircelula(l, c +1);
+            abrircelula(l, c-1);
+        }
+    }
+}
+
+int ganhou(){
+    int quantidade=0;
+    int l, c;
+    for(l = 0; l < tam; l++){
+        for(c= 0; c < tam; c++){
+           if (jogo[l][c].estaAberta==0 && jogo[l][c].eBomba==0){
+                quantidade++;
+           }
+        }
+    }
+    return quantidade
+}
+
+void jogar(){
+    int linha, coluna;
+    do{
+        imprimir();
+        do{
+            printf("\nDigite as coordenadas de linha e coluna: ");
+            scanf("%d %d", &linha, &coluna);
+            if (coordenadaValida(linha, coluna)==0){
+                printf("\nCoordenada inválida!");
+            }
+        }while (coordenadaValida(linha, coluna)==0 || jogo[linha][coluna].estarAberta == 1);
+        abrircelula(linha,coluna);
+    }while(ganhou()!=0 && jogo[linha][coluna].eBomba==0);
+
+    if(jogo[linha][coluna].eBomba==1){
+        printf("\n\t GAME OVER\n")
+    }else{
+        printf("\n\t CONGRATS! YOU WON!\n")
+    }
+}
 
 int main(){
 
-    inicio();
-    sorteio(10);
-    contagem();
-    printf("\n\t\t\tCAMPO MINADO\n");
-    imprimir();
+    int op;
+
+    do{
+
+        inicio();
+        sorteio(10);
+        contagem();
+        printf("\n\t\t\tCAMPO MINADO\n");
+        jogar();
+
+        printf("Digite 1 para jogar novamente: ");
+        scanf("%d", &op);
+
+    }while(op==1);
 
     return 0;
 }
